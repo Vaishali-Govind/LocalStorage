@@ -1,39 +1,100 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
-    <title>LocalStorage</title>
-    <link rel="stylesheet" href="style.css" type="text/css">
-    <script src="https://kit.fontawesome.com/97ec21326b.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+      <link rel="stylesheet" href="./index2.css">
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">       
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Document</title>
 </head>
-
 <body>
-   <div class="icon">
-    <i class="fas fa-hamburger fa-5x"></i>
-   </div>
-
-    <div class="wrapper">
-        <h2>LOCAL FOOD</h2>
-        <p></p>
-        <ul class="plates">
-            <li>Loading food...</li>
-        </ul>
-        <form class="add-items">
-            <input type="text" name="item" placeholder="Item Name" required>
-            <input type="submit" value="+ Add Item">
+  <div class="border">
+    <div class="row">
+        <form class="col s8 offset-m2 add ">
+          <div class="row">
+            <div class="input-field col s6">
+              <input placeholder="123456" id="Studentid" type="text" name="id" class="validate">
+              <label for="studentid">Student ID</label>
+            </div>
+            <div class="input-field col s6">
+              <input id="name" type="text" class="validate" name="na">
+              <label for="name">Name</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input  id="course" type="text" class="validate" name="course"> 
+              <label for="Course" class="label" name="course">Course</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="age" type="number" class="validate" name="age">
+              <label for="Age">Age</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="input-field col s12">
+              <input id="email" type="email" class="validate input" name="email">
+              <label for="email">Email</label>
+            </div>
+          </div>
+         
+  <button class="btn waves-effect waves-light" type="submit" name="action">Submit
+    <i class="material-icons right">send</i>
+  </button>
+              </div>
+            </div>
+          </div>
         </form>
+      </div>
     </div>
 
-    <script>
-        const addItems = document.querySelector('.add-items');
-        const itemsList = document.querySelector('.plates');
-        const items = JSON.parse(localStorage.getItem('items')) || [];
+      <table class="tabel">
+        <thead>
+          <tr>
+              <th>Name</th>
+              <th>Student ID </th>
+              <th>Course</th>
+              <th>Age</th>
+              <th>Email</th>
+          </tr>
+        </thead>
+
+        <tbody class="tr">
+          <tr>
+            <td>Loading..</td>
+            <td>Loading..</td>
+            <td>Loading..</td>
+          </tr>
+         
+        </tbody>
+      </table>
+            
+<script>
+   
+    const add = document.querySelector('.add');
+
+    const itemsList = document.querySelector('.tr');
+    const items = JSON.parse(localStorage.getItem('items')) || [];
         function addItem(e){
             e.preventDefault();
-            const text = (this.querySelector('[name=item]')).value;
+            const id = (this.querySelector('[name=id]')).value;
+            const na = (this.querySelector('[name=na]')).value;
+            const course = (this.querySelector('[name=course]')).value;
+            const age = (this.querySelector('[name=age]')).value;
+            const email = (this.querySelector('[name=email]')).value;
             const item = {
-                text,
+                id,
+                na,
+                course,
+                age,
+                email,
                 done:false
             }
             items.push(item);
@@ -41,33 +102,23 @@
             localStorage.setItem('items',JSON.stringify(items));
             this.reset();
         }
-        function populateList(plates = [], platesList) {
-            platesList.innerHTML = plates.map((plate, i) => {
+        function populateList(tr = [], trList) {
+            trList.innerHTML = tr.map((tr) => {
                 return `
-                    <li>
-                        <input type="checkbox" data-index=${i} id="item${i}" ${plate.done ? 'checked' : '' } />
-                        <label for="item${i}">${plate.text}</label>
-                    </li>
+                    
+                        <tr>
+                        <td>${tr.na}</td>
+                        <td>${tr.id}</td>
+                        <td>${tr.course}</td>
+                        <td>${tr.age}</td>
+                        <td>${tr.email}</td>
+                        <tr>
+                
                 `;
             }).join('');
         }
-        function toggleDone(e){
-            if(!e.target.matches('input')) return;
-            const el = e.target;
-            const index = el.dataset.index;
-            console.log(index);
-            console.log(items[index]);
-            items[index].done =!items[index].done;
-            localStorage.setItem('items',JSON.stringify(items));
-            populateList(items, itemsList);            
-            // console.log(index);
-        }
-        addItems.addEventListener('submit', addItem);
-        itemsList.addEventListener('click', toggleDone);
+        add.addEventListener('submit', addItem);
         populateList(items, itemsList);
-    </script>
-
-
+</script>
 </body>
-
 </html>
