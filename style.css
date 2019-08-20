@@ -18,7 +18,8 @@ body{
 form {
     background-color: rgba(255,255,255,0.9);
     display:inline-block;
-    margin-top:-1%;
+    /* margin-top:-1%; */
+    margin: 0 auto;
     border: 2px solid teal;
     border-radius: 4px;
     max-width: 100%;    
@@ -33,4 +34,3 @@ form {
       border: 2px solid teal;
       border-radius: 4px;
   }
-    
